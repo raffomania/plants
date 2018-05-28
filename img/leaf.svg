@@ -15,7 +15,11 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="leaf.svg">
+   sodipodi:docname="leaf.svg"
+   inkscape:export-filename="/home/rafael/workspace/game/plants/img/leaf.png"
+   inkscape:export-xdpi="75.629997"
+   inkscape:export-ydpi="75.629997"
+   shape-rendering="crispEdges">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,16 +29,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="324.30087"
-     inkscape:cy="583.69966"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="239.44094"
+     inkscape:cy="589.68896"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1596"
-     inkscape:window-height="882"
-     inkscape:window-x="1920"
-     inkscape:window-y="196"
+     inkscape:window-width="2556"
+     inkscape:window-height="1420"
+     inkscape:window-x="1680"
+     inkscape:window-y="18"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata5">

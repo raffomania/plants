@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/plant.gd" type="Script" id=1]
+
+[node name="twig" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+twig_color = Color( 0.0885468, 0.21875, 0.0615234, 1 )
+twig_length = 5
+twig_thickness = 2
+gap = 1
+straightness = 0.7
+
+
