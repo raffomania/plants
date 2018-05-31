@@ -9,12 +9,16 @@ script = ExtResource( 1 )
 
 [node name="twig" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 243.217, 249.663 )
-twig_thickness = 3
+position = Vector2( 244.325, 266.283 )
+twig_color = Color( 0.242188, 0.151958, 0.0359497, 1 )
+leaf_color = Color( 0.192932, 0.425781, 0, 1 )
+twig_length = 10
+twig_thickness = 5
 gap = 0
-straightness = 0.4
+straightness = 0.0
 branchiness = 0.3
-leafiness = 0.2
+leafiness = 0.3
+sun_affinity = 0.5
 do_randomize = true
 
 
