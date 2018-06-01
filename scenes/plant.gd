@@ -11,6 +11,9 @@ export(float, 0, 1) var leafiness
 export(float, 0, 1) var sun_affinity
 export(bool) var do_randomize
 
+var preScript = preload("res://assets/softnoise.gd")
+var softnoise
+
 var size = 1
 var end_position
 var actual_leafiness
@@ -19,13 +22,20 @@ var resting_rotation
 func _process(dt):
   var right = PI / 2
   var sway_direction = right - global_rotation
-  var wind_influence = actual_leafiness * rand_range(0, 3)
+  var wind_change_speed = 0.001
+  var wind_force = 0.5
+  var wind_coarseness = 10
+  var wind_position = Vector2(OS.get_ticks_msec() * wind_change_speed, 0) + global_position / wind_coarseness
+  var wind_noise = softnoise.openSimplex2D(wind_position.x, wind_position.y)
+  var wind_influence = actual_leafiness * wind_noise * wind_force
   var resting_direction = resting_rotation - rotation
   rotate(dt * sway_direction * wind_influence + dt * resting_direction)
 
 func grow():
   if do_randomize:
     randomize()
+
+  softnoise = preScript.SoftNoise.new(randi())
 
   resting_rotation = rotation
   end_position = Vector2(0, - twig_length * size * 2)
