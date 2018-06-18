@@ -1,7 +1,7 @@
 extends Node
 
 func _ready():
-  $twig.grow()
+  $twig.initialize()
 
 func _unhandled_input(event):
   if event.is_action_pressed('ui_cancel'):
