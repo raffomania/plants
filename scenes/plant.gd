@@ -23,6 +23,10 @@ var max_children = 1
 var end_position
 var actual_leafiness
 var resting_rotation
+var age = 0
+var min_max_size = 0.2
+var min_branching_max_size = 0.3
+var start_branching_at_size = 0.1
 
 func _process(dt):
   var right = PI / 2
@@ -32,28 +36,37 @@ func _process(dt):
   var wind_coarseness = 10
   var wind_position = Vector2(OS.get_ticks_msec() * wind_change_speed, 0) + global_position / wind_coarseness
   var wind_noise = softnoise.openSimplex2D(wind_position.x, wind_position.y)
-  var wind_influence = actual_leafiness * wind_noise * wind_force
+  var wind_influence = min(1, 0.2 + actual_leafiness) * wind_noise * wind_force
   var resting_direction = resting_rotation - rotation
   rotate(dt * sway_direction * wind_influence + dt * resting_direction)
-  grow(1 * dt)
+  grow(2 * dt)
 
 func initialize():
   if do_randomize:
     randomize()
   softnoise = softnoiseScript.SoftNoise.new(randi())
   resting_rotation = rotation
-  end_position = Vector2(0, - twig_length * 2)
+  end_position = Vector2(0, - twig_length * max_size * 2)
   actual_leafiness = leafiness * (1 - max_size)
+
+  update_scale()
 
   add_twig_line()
   for i in range(round(actual_leafiness * 10)):
     add_leaf(i)
 
+func size_after_days(days):
+  # Classic sigmoid function
+  var curve_steepness = 1 / (days_until_grown_up * 0.15)
+  var mid_point = (days_until_grown_up * 0.4)
+  return 1 / (1 + exp((- curve_steepness) * (days - mid_point)))
+
 func grow(days):
-  size = min(max_size, size + (days / days_until_grown_up))
+  age += days
+  size = size_after_days(age)
   update_scale()
 
-  if size > 0.2 and not $twig:
+  if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
 
 func update_scale():
@@ -63,7 +76,7 @@ func add_twig_line():
   var line = Line2D.new()
   line.name = 'line'
   line.default_color = twig_color
-  line.width = twig_thickness
+  line.width = twig_thickness * max_size
   line.add_point(Vector2(0, 0))
   line.add_point(end_position)
   add_child(line)
@@ -75,7 +88,7 @@ func add_leaf(zindex):
   leaf.translate(position)
   leaf.rotate(randf() * PI * 2)
   leaf.modulate = leaf_color.lightened(randf() * 0.1 + (zindex * 0.1))
-  var leaf_size = rand_range(0.8, 1)
+  var leaf_size = rand_range(0.7, 1)
   leaf.apply_scale(Vector2(leaf_size, leaf_size))
   leaf.add_to_group('leafs')
   leaf.z_index = zindex
@@ -104,10 +117,18 @@ func set_child_props(twig, num_children, child_index):
   twig.days_until_grown_up = days_until_grown_up
 
   twig.max_size = max_size * rand_range(0.85, 0.99)
-  if randf() < branchiness * 0.5:
-    twig.max_children = round(branchiness * 5)
+  if randf() < branchiness * 0.5 and twig.max_size > min_branching_max_size:
+    twig.max_children = round(randf() * branchiness * 5)
+  elif twig.max_size > min_max_size:
+    twig.max_children = 1
+  else:
+    print(twig.max_size)
+    twig.max_children = 0
 
   twig.position = end_position + Vector2(0, - gap)
+  twig.rotate(get_child_rotation(child_index, num_children))
+
+func get_child_rotation(child_index, num_children):
   var upwards = 0
   var upward_correction = (upwards - global_rotation) * sun_affinity
   var crookedness = (1 - straightness)
@@ -118,6 +139,4 @@ func set_child_props(twig, num_children, child_index):
     sibling_offset = (offset_ratio * sibling_range) - sibling_range/2
   var random_range = PI * 0.5 * crookedness
   var random_offset = rand_range(-random_range/2, random_range/2)
-  var rotation_factor = upward_correction + sibling_offset + random_offset
-  twig.rotate(rotation_factor)
-  resting_rotation = rotation
+  return upward_correction + sibling_offset + random_offset
