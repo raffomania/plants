@@ -24,7 +24,7 @@ var max_children = 1
 var end_position
 var actual_leafiness
 var resting_rotation
-var age = 0
+var total_energy = 0
 var min_max_size = 0.2
 var min_branching_max_size = 0.3
 var start_branching_at_size = 0.02
@@ -45,7 +45,7 @@ func _process(dt):
   var resting_direction = resting_rotation - rotation
   rotate(dt * sway_direction * wind_influence + dt * resting_direction)
   if is_root:
-    grow(50 * dt)
+    grow(30 * dt)
 
 func initialize():
   if do_randomize:
@@ -64,16 +64,18 @@ func initialize():
 
 func size_after_days(days):
   # Classic sigmoid function
-  var curve_steepness = 1 / (days_until_grown_up * 0.15)
-  var mid_point = (days_until_grown_up * 0.4)
+  var grow_duration = days_until_grown_up * pow(max_size, 2)
+  var curve_steepness = 7 / grow_duration
+  var mid_point = grow_duration * 0.5
   return 1 / (1 + exp((- curve_steepness) * (days - mid_point)))
 
-func grow(days):
-  age += days
-  var size_before = size
-  size = size_after_days(age)
-  var energy_left = size_before / size
-  size_changed()
+func grow(energy):
+  var own_energy = 0
+  if total_energy < days_until_grown_up:
+    own_energy = energy / (max_children * 10 + 1)
+    total_energy += own_energy
+    size = size_after_days(total_energy)
+    size_changed()
 
   if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
@@ -82,7 +84,7 @@ func grow(days):
 
   for child in get_children():
     if child.is_in_group('twigs'):
-      child.grow((energy_left * days) / max_children)
+      child.grow((energy - own_energy) / max_children)
 
 func size_changed():
   set_scale(Vector2(size, size))
