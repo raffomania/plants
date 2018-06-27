@@ -1,6 +1,7 @@
 extends Node2D
 
-export(Color) var twig_color
+export(Color) var twig_color_young
+export(Color) var twig_color_adult
 export(Color) var leaf_color
 export(int) var twig_length
 export(int) var twig_thickness
@@ -26,7 +27,11 @@ var resting_rotation
 var age = 0
 var min_max_size = 0.2
 var min_branching_max_size = 0.3
-var start_branching_at_size = 0.1
+var start_branching_at_size = 0.02
+var is_root = false
+
+func _ready():
+  add_to_group('twigs')
 
 func _process(dt):
   var right = PI / 2
@@ -39,17 +44,19 @@ func _process(dt):
   var wind_influence = min(1, 0.2 + actual_leafiness) * wind_noise * wind_force
   var resting_direction = resting_rotation - rotation
   rotate(dt * sway_direction * wind_influence + dt * resting_direction)
-  grow(5 * dt)
+  if is_root:
+    grow(50 * dt)
 
 func initialize():
   if do_randomize:
     randomize()
+  is_root = not get_parent().is_in_group('twigs')
   softnoise = softnoiseScript.SoftNoise.new(randi())
   resting_rotation = rotation
   end_position = Vector2(0, - twig_length * max_size * 2)
   actual_leafiness = leafiness * (1 - max_size)
 
-  update_scale()
+  size_changed()
 
   add_twig_line()
   for i in range(round(actual_leafiness * 5)):
@@ -63,21 +70,30 @@ func size_after_days(days):
 
 func grow(days):
   age += days
+  var size_before = size
   size = size_after_days(age)
-  update_scale()
+  var energy_left = size_before / size
+  size_changed()
 
   if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
   if max_size > min_max_size and max_children == 0:
     pass
 
-func update_scale():
+  for child in get_children():
+    if child.is_in_group('twigs'):
+      child.grow((energy_left * days) / max_children)
+
+func size_changed():
   set_scale(Vector2(size, size))
+  var line = $line
+  if line:
+    line.default_color = twig_color_young.linear_interpolate(twig_color_adult, pow(size, 2))
 
 func add_twig_line():
   var line = Line2D.new()
   line.name = 'line'
-  line.default_color = twig_color
+  line.default_color = twig_color_young
   line.width = twig_thickness * max_size
   line.add_point(Vector2(0, 0))
   line.add_point(end_position)
@@ -88,7 +104,10 @@ func add_leaf(zindex):
   var leaf = scene.instance()
   var position = randf() * end_position
   leaf.translate(position)
-  leaf.rotate(randf() * PI * 2)
+  if randf() > 0.5:
+    # turn around to the other side
+    leaf.rotate(PI)
+  leaf.rotate(randf() * PI * 0.5)
   leaf.modulate = leaf_color.lightened(randf() * 0.1 + (zindex * 0.2))
   var leaf_size = rand_range(0.7, 1)
   leaf.apply_scale(Vector2(leaf_size, leaf_size))
@@ -113,7 +132,8 @@ func set_child_props(twig, num_children, child_index):
   twig.leafiness = leafiness
   twig.do_randomize = do_randomize
   twig.leaf_color = leaf_color
-  twig.twig_color = twig_color
+  twig.twig_color_young = twig_color_young
+  twig.twig_color_adult = twig_color_adult
   twig.sun_affinity = sun_affinity
   twig.days_until_grown_up = days_until_grown_up
 

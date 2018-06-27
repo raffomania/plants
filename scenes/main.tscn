@@ -31,14 +31,15 @@ _sections_unfolded = [ "Material", "Visibility" ]
 [node name="twig" parent="." index="3" instance=ExtResource( 5 )]
 
 position = Vector2( 238.91, 260.721 )
-twig_color = Color( 0.242188, 0.151958, 0.0359497, 1 )
+twig_color_young = Color( 0.389022, 0.886719, 0.162796, 1 )
+twig_color_adult = Color( 0.167969, 0.0987883, 0.00984192, 1 )
 leaf_color = Color( 0.192932, 0.425781, 0, 1 )
 twig_length = 6
 twig_thickness = 5
 gap = 0
 straightness = 0.3
-branchiness = 0.6
-leafiness = 0.5
+branchiness = 0.7
+leafiness = 0.6
 sun_affinity = 0.3
 do_randomize = true
 days_until_grown_up = 20
