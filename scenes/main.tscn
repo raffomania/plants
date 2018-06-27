@@ -24,7 +24,7 @@ _sections_unfolded = [ "Offset", "Transform" ]
 [node name="sun" type="Sprite" parent="." index="2"]
 
 modulate = Color( 3, 3, 2, 1 )
-position = Vector2( 457, 195 )
+position = Vector2( 311.697, 46.0871 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Material", "Visibility" ]
 
@@ -33,13 +33,13 @@ _sections_unfolded = [ "Material", "Visibility" ]
 position = Vector2( 238.91, 260.721 )
 twig_color = Color( 0.242188, 0.151958, 0.0359497, 1 )
 leaf_color = Color( 0.192932, 0.425781, 0, 1 )
-twig_length = 10
+twig_length = 6
 twig_thickness = 5
 gap = 0
 straightness = 0.3
-branchiness = 0.7
-leafiness = 0.0
-sun_affinity = 0.5
+branchiness = 0.6
+leafiness = 0.5
+sun_affinity = 0.3
 do_randomize = true
 days_until_grown_up = 20
 

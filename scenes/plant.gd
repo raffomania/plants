@@ -39,7 +39,7 @@ func _process(dt):
   var wind_influence = min(1, 0.2 + actual_leafiness) * wind_noise * wind_force
   var resting_direction = resting_rotation - rotation
   rotate(dt * sway_direction * wind_influence + dt * resting_direction)
-  grow(2 * dt)
+  grow(5 * dt)
 
 func initialize():
   if do_randomize:
@@ -52,7 +52,7 @@ func initialize():
   update_scale()
 
   add_twig_line()
-  for i in range(round(actual_leafiness * 10)):
+  for i in range(round(actual_leafiness * 5)):
     add_leaf(i)
 
 func size_after_days(days):
@@ -68,6 +68,8 @@ func grow(days):
 
   if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
+  if max_size > min_max_size and max_children == 0:
+    pass
 
 func update_scale():
   set_scale(Vector2(size, size))
@@ -87,7 +89,7 @@ func add_leaf(zindex):
   var position = randf() * end_position
   leaf.translate(position)
   leaf.rotate(randf() * PI * 2)
-  leaf.modulate = leaf_color.lightened(randf() * 0.1 + (zindex * 0.1))
+  leaf.modulate = leaf_color.lightened(randf() * 0.1 + (zindex * 0.2))
   var leaf_size = rand_range(0.7, 1)
   leaf.apply_scale(Vector2(leaf_size, leaf_size))
   leaf.add_to_group('leafs')
@@ -105,7 +107,6 @@ func spawn_children(count):
 
 func set_child_props(twig, num_children, child_index):
   twig.twig_thickness = twig_thickness
-  twig.twig_length = twig_length
   twig.gap = gap
   twig.branchiness = branchiness
   twig.straightness = straightness
@@ -116,13 +117,12 @@ func set_child_props(twig, num_children, child_index):
   twig.sun_affinity = sun_affinity
   twig.days_until_grown_up = days_until_grown_up
 
+  twig.twig_length = twig_length * rand_range(0.9, 1.2)
   twig.max_size = max_size * rand_range(0.85, 0.99)
+
   if randf() < branchiness * 0.5 and twig.max_size > min_branching_max_size:
-    twig.max_children = round(randf() * branchiness * 5)
-  elif twig.max_size > min_max_size:
-    twig.max_children = 1
-  else:
-    print(twig.max_size)
+    twig.max_children += round(randf() * branchiness * 3)
+  elif twig.max_size < min_max_size:
     twig.max_children = 0
 
   twig.position = end_position + Vector2(0, - gap)
