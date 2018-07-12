@@ -13,7 +13,7 @@ export(float, 0, 1) var sun_affinity
 export(bool) var do_randomize
 
 # two years max, atm
-export(int, 0, 730) var days_until_grown_up
+export(float, 0, 1) var growth_speed
 
 var softnoiseScript = preload("res://assets/softnoise.gd")
 var softnoise
@@ -34,18 +34,21 @@ func _ready():
   add_to_group('twigs')
 
 func _process(dt):
+  rotate(get_wind_rotation(dt))
+  if is_root:
+    grow(10 * dt)
+
+func get_wind_rotation(dt):
   var right = PI / 2
   var sway_direction = right - global_rotation
   var wind_change_speed = 0.001
-  var wind_force = 0.5
+  var wind_force = 0.2
   var wind_coarseness = 10
   var wind_position = Vector2(OS.get_ticks_msec() * wind_change_speed, 0) + global_position / wind_coarseness
   var wind_noise = softnoise.openSimplex2D(wind_position.x, wind_position.y)
   var wind_influence = min(1, 0.2 + actual_leafiness) * wind_noise * wind_force
   var resting_direction = resting_rotation - rotation
-  rotate(dt * sway_direction * wind_influence + dt * resting_direction)
-  if is_root:
-    grow(30 * dt)
+  return dt * sway_direction * wind_influence + dt * resting_direction
 
 func initialize():
   if do_randomize:
@@ -63,40 +66,48 @@ func initialize():
     add_leaf(i)
 
 func size_after_days(days):
-  # Classic sigmoid function
-  var grow_duration = days_until_grown_up * pow(max_size, 2)
-  var curve_steepness = 7 / grow_duration
-  var mid_point = grow_duration * 0.5
-  return 1 / (1 + exp((- curve_steepness) * (days - mid_point)))
+  return limited_growth(days)
+
+func limited_growth(t):
+  var limit = 1
+  var start = 0
+  var factor = growth_speed * 0.1
+  return limit - (limit - start) * exp(- factor * t)
+
+func ease_out(t):
+  t = t - 1
+  return t*t*t+1
 
 func grow(energy):
   var own_energy = 0
-  if total_energy < days_until_grown_up:
-    own_energy = energy / (max_children * 10 + 1)
-    total_energy += own_energy
-    size = size_after_days(total_energy)
-    size_changed()
+  own_energy = energy * 0.1
+  total_energy += own_energy
+  var size_before = size
+  size = size_after_days(total_energy)
+  # TODO this doesn't seem right
+  var energy_used = own_energy * (size_before / size)
+  size_changed()
 
   if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
-  if max_size > min_max_size and max_children == 0:
-    pass
 
   for child in get_children():
     if child.is_in_group('twigs'):
-      child.grow((energy - own_energy) / max_children)
+      child.grow((energy - energy_used) / max_children)
 
 func size_changed():
-  set_scale(Vector2(size, size))
+  var width = min(size, 1)
+  var length = min(size * 5, 1)
+  set_scale(Vector2(length, length))
   var line = $line
   if line:
-    line.default_color = twig_color_young.linear_interpolate(twig_color_adult, pow(size, 2))
+    line.width = max(width * twig_thickness * max_size, 1)
+    line.default_color = twig_color_young.linear_interpolate(twig_color_adult, ease_out(width))
 
 func add_twig_line():
   var line = Line2D.new()
   line.name = 'line'
   line.default_color = twig_color_young
-  line.width = twig_thickness * max_size
   line.add_point(Vector2(0, 0))
   line.add_point(end_position)
   add_child(line)
@@ -137,10 +148,11 @@ func set_child_props(twig, num_children, child_index):
   twig.twig_color_young = twig_color_young
   twig.twig_color_adult = twig_color_adult
   twig.sun_affinity = sun_affinity
-  twig.days_until_grown_up = days_until_grown_up
 
   twig.twig_length = twig_length * rand_range(0.9, 1.2)
-  twig.max_size = max_size * rand_range(0.85, 0.99)
+  var size_reduction = rand_range(0.85, 0.99)
+  twig.max_size = max_size * size_reduction
+  twig.growth_speed = growth_speed / size_reduction
 
   if randf() < branchiness * 0.5 and twig.max_size > min_branching_max_size:
     twig.max_children += round(randf() * branchiness * 3)
