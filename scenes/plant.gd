@@ -19,6 +19,7 @@ var softnoiseScript = preload("res://assets/softnoise.gd")
 var softnoise
 
 var size = 0
+var age = 0
 var max_size = 1
 var max_children = 1
 var end_position
@@ -27,7 +28,6 @@ var resting_rotation
 var total_energy = 0
 var min_max_size = 0.2
 var min_branching_max_size = 0.3
-var start_branching_at_size = 0.02
 var is_root = false
 
 func _ready():
@@ -35,8 +35,9 @@ func _ready():
 
 func _process(dt):
   rotate(get_wind_rotation(dt))
+  age += dt
   if is_root:
-    grow(10 * dt)
+    grow(age * 30 * dt)
 
 func get_wind_rotation(dt):
   var right = PI / 2
@@ -68,11 +69,12 @@ func initialize():
 func size_after_days(days):
   return limited_growth(days)
 
-func limited_growth(t):
+func limited_growth(t, growth_factor = null):
   var limit = 1
   var start = 0
-  var factor = growth_speed * 0.1
-  return limit - (limit - start) * exp(- factor * t)
+  if not growth_factor:
+    growth_factor = growth_speed * 0.1
+  return limit - (limit - start) * exp(- growth_factor * t)
 
 func ease_out(t):
   t = t - 1
@@ -80,29 +82,29 @@ func ease_out(t):
 
 func grow(energy):
   var own_energy = 0
-  own_energy = energy * 0.1
-  total_energy += own_energy
-  var size_before = size
-  size = size_after_days(total_energy)
-  # TODO this doesn't seem right
-  var energy_used = own_energy * (size_before / size)
-  size_changed()
+  if size < 1:
+    own_energy = (energy / max(max_children/2, 1)) * 0.05
+    # own_energy = energy * 0.05
+    total_energy += own_energy
+    size = size_after_days(total_energy)
+    size_changed()
 
-  if size > start_branching_at_size and not has_node('twig'):
+  if not has_node('twig'):
     spawn_children(max_children)
 
   for child in get_children():
     if child.is_in_group('twigs'):
-      child.grow((energy - energy_used) / max_children)
+      child.grow((energy - own_energy) / max_children)
 
 func size_changed():
   var width = min(size, 1)
-  var length = min(size * 5, 1)
+  var length = min(size * 10, 1)
   set_scale(Vector2(length, length))
   var line = $line
   if line:
+    # var color_factor = min(age * 0.03, 1)
+    $line.default_color = twig_color_young.linear_interpolate(twig_color_adult, size)
     line.width = max(width * twig_thickness * max_size, 1)
-    line.default_color = twig_color_young.linear_interpolate(twig_color_adult, ease_out(width))
 
 func add_twig_line():
   var line = Line2D.new()
