@@ -1,10 +1,32 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://img/bg.png" type="Texture" id=3]
 [ext_resource path="res://img/sun.png" type="Texture" id=4]
-[ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/sun/sun.gd" type="Script" id=5]
+[ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/butterfly/butterfly.png" type="Texture" id=7]
+[ext_resource path="res://scenes/butterfly/butterfly.gd" type="Script" id=8]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "fly"
+length = 0.2
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
 
 [node name="root" type="Node" index="0"]
 
@@ -23,25 +45,47 @@ _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="sun" type="Sprite" parent="." index="2"]
 
-modulate = Color( 3, 3, 2, 1 )
-position = Vector2( 311.697, 46.0871 )
+position = Vector2( 236.843, 348.047 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 4 )
-_sections_unfolded = [ "Material", "Visibility" ]
+offset = Vector2( 0, -600 )
+script = ExtResource( 5 )
+_sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
+glow = 4.0
 
-[node name="twig" parent="." index="3" instance=ExtResource( 5 )]
+[node name="twig" parent="." index="3" instance=ExtResource( 6 )]
 
 position = Vector2( 238.91, 260.721 )
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
 twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
 leaf_color = Color( 1, 0.443359, 0.109375, 1 )
-twig_length = 7
+twig_length = 10
 twig_thickness = 10
 gap = 0
 straightness = 0.4
-branchiness = 0.6
-leafiness = 0.5
-sun_affinity = 0.4
+branchiness = 0.4
+leafiness = 0.8
+sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
+
+[node name="butterfly" type="Sprite" parent="." index="4"]
+
+position = Vector2( 263.513, 159.927 )
+rotation = -0.567645
+texture = ExtResource( 7 )
+vframes = 2
+script = ExtResource( 8 )
+_sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="butterfly" index="0"]
+
+root_node = NodePath("..")
+autoplay = "fly"
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/fly = SubResource( 1 )
+blend_times = [  ]
 
 

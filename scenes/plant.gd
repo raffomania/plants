@@ -36,7 +36,7 @@ func _ready():
 func _process(dt):
   rotate(get_wind_rotation(dt))
   if is_root:
-    grow(10 * dt)
+    grow(20 * dt)
 
 func get_wind_rotation(dt):
   var right = PI / 2
@@ -93,7 +93,7 @@ func grow(energy):
 
   for child in get_children():
     if child.is_in_group('twigs'):
-      child.grow((energy - energy_used) / max_children)
+      child.grow(energy - energy_used)
 
 func size_changed():
   var width = min(size, 1)
