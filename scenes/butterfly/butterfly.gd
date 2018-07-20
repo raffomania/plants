@@ -20,7 +20,6 @@ func flip(side):
     if side == 'right' and not flip_h:
         set_flip_h(true)
         rotation = - rotation
-        pass
     elif side == 'left' and flip_h:
         set_flip_h(false)
         rotation = - rotation

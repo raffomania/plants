@@ -38,20 +38,21 @@ environment = ExtResource( 2 )
 
 [node name="bg" type="Sprite" parent="." index="1"]
 
-position = Vector2( 0, -95 )
+position = Vector2( 0, -87.8992 )
 texture = ExtResource( 3 )
 centered = false
-_sections_unfolded = [ "Offset", "Transform" ]
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
 
 [node name="sun" type="Sprite" parent="." index="2"]
 
-position = Vector2( 236.843, 348.047 )
-scale = Vector2( 0.5, 0.5 )
+modulate = Color( 5, 5, 3, 1 )
+position = Vector2( 236.843, 323.492 )
+rotation = 0.0965232
+scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 4 )
-offset = Vector2( 0, -600 )
+offset = Vector2( 0, -700 )
 script = ExtResource( 5 )
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
-glow = 4.0
 
 [node name="twig" parent="." index="3" instance=ExtResource( 6 )]
 
@@ -72,7 +73,7 @@ growth_speed = 0.5
 [node name="butterfly" type="Sprite" parent="." index="4"]
 
 position = Vector2( 263.513, 159.927 )
-rotation = -0.567645
+rotation = -1.03505
 texture = ExtResource( 7 )
 vframes = 2
 script = ExtResource( 8 )
