@@ -32,6 +32,9 @@ var is_root = false
 
 func _ready():
   add_to_group('twigs')
+  is_root = not get_parent().is_in_group('twigs')
+  if is_root:
+    initialize()
 
 func _process(dt):
   rotate(get_wind_rotation(dt))
@@ -53,7 +56,6 @@ func get_wind_rotation(dt):
 func initialize():
   if do_randomize:
     randomize()
-  is_root = not get_parent().is_in_group('twigs')
   softnoise = softnoiseScript.SoftNoise.new(randi())
   resting_rotation = rotation
   end_position = Vector2(0, - twig_length * max_size * 2)
