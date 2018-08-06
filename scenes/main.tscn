@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://img/bg.png" type="Texture" id=3]
 [ext_resource path="res://img/sun.png" type="Texture" id=4]
 [ext_resource path="res://scenes/sun/sun.gd" type="Script" id=5]
-[ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/butterfly/butterfly.png" type="Texture" id=7]
-[ext_resource path="res://scenes/butterfly/butterfly.gd" type="Script" id=8]
+[ext_resource path="res://img/field.png" type="Texture" id=6]
+[ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/butterfly/butterfly.png" type="Texture" id=8]
+[ext_resource path="res://scenes/butterfly/butterfly.gd" type="Script" id=9]
 
 [sub_resource type="Animation" id=1]
 
@@ -54,9 +55,15 @@ offset = Vector2( 0, -700 )
 script = ExtResource( 5 )
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
 
-[node name="twig" parent="." index="3" instance=ExtResource( 6 )]
+[node name="field" type="Sprite" parent="." index="3"]
 
-position = Vector2( 238.91, 260.721 )
+position = Vector2( 245.119, 167.833 )
+scale = Vector2( 0.919095, 0.439097 )
+texture = ExtResource( 6 )
+
+[node name="twig" parent="." index="4" instance=ExtResource( 7 )]
+
+position = Vector2( 240.204, 247.78 )
 z_index = 5
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -72,9 +79,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig2" parent="." index="4" instance=ExtResource( 6 )]
+[node name="twig2" parent="." index="5" instance=ExtResource( 7 )]
 
-position = Vector2( 364.786, 176.657 )
+position = Vector2( 358.962, 204.804 )
 scale = Vector2( 0.3, 0.3 )
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
 twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
@@ -89,9 +96,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig3" parent="." index="5" instance=ExtResource( 6 )]
+[node name="twig3" parent="." index="6" instance=ExtResource( 7 )]
 
-position = Vector2( 139.441, 154.651 )
+position = Vector2( 182.147, 183.122 )
 scale = Vector2( 0.3, 0.3 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -107,9 +114,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig4" parent="." index="6" instance=ExtResource( 6 )]
+[node name="twig4" parent="." index="7" instance=ExtResource( 7 )]
 
-position = Vector2( 122.276, 164.773 )
+position = Vector2( 158.512, 196.803 )
 scale = Vector2( 0.5, 0.5 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -125,13 +132,14 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="butterfly" type="Sprite" parent="." index="7"]
+[node name="butterfly" type="Sprite" parent="." index="8"]
 
+editor/display_folded = true
 position = Vector2( 263.513, 159.927 )
 rotation = -1.03505
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 vframes = 2
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="butterfly" index="0"]

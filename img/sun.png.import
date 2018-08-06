@@ -7,10 +7,7 @@ path="res://.import/sun.png-a97650856ce91be4be519bf7b205b27f.stex"
 [deps]
 
 source_file="res://img/sun.png"
-source_md5="dc119922b1d443a1e4dfb36aee7053f9"
-
 dest_files=[ "res://.import/sun.png-a97650856ce91be4be519bf7b205b27f.stex" ]
-dest_md5="70288c6a73d7d2b5a5c962707ebf74ff"
 
 [params]
 

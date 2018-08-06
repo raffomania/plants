@@ -35,6 +35,7 @@ func _ready():
   add_to_group('twigs')
   is_root = not get_parent().is_in_group('twigs')
   initial_scale = scale
+  $indicator.visible = false
   self.z_index = position.y
   if is_root:
     initialize()

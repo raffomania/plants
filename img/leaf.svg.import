@@ -7,10 +7,7 @@ path="res://.import/leaf.svg-fb03c2859674fb9529e116ebc8e40598.stex"
 [deps]
 
 source_file="res://img/leaf.svg"
-source_md5="7a147bf9a8a58eab220db2069f436774"
-
 dest_files=[ "res://.import/leaf.svg-fb03c2859674fb9529e116ebc8e40598.stex" ]
-dest_md5="bb6ca9a38415c17f4369f0009268a709"
 
 [params]
 
