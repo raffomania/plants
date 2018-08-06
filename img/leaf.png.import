@@ -7,7 +7,10 @@ path="res://.import/leaf.png-89636ff9e2e0b16c79739639198dcbb9.stex"
 [deps]
 
 source_file="res://img/leaf.png"
+source_md5="b9c9b42073d58db1100833991a5fd5f0"
+
 dest_files=[ "res://.import/leaf.png-89636ff9e2e0b16c79739639198dcbb9.stex" ]
+dest_md5="bacd2c692c19e6052e3fb04b4ba09917"
 
 [params]
 
