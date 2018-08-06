@@ -29,10 +29,13 @@ var min_max_size = 0.2
 var min_branching_max_size = 0.3
 var start_branching_at_size = 0.02
 var is_root = false
+var initial_scale
 
 func _ready():
   add_to_group('twigs')
   is_root = not get_parent().is_in_group('twigs')
+  initial_scale = scale
+  self.z_index = position.y
   if is_root:
     initialize()
 
@@ -100,7 +103,7 @@ func grow(energy):
 func size_changed():
   var width = min(size, 1)
   var length = min(size * 5, 1)
-  set_scale(Vector2(length, length))
+  set_scale(initial_scale * length)
   var line = $line
   if line:
     line.width = max(width * twig_thickness * max_size, 1)
