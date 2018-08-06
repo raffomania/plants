@@ -105,8 +105,8 @@ func size_changed():
   var width = min(size, 1)
   var length = min(size * 5, 1)
   set_scale(initial_scale * length)
-  var line = $line
-  if line:
+  if has_node('line'):
+    var line = get_node('line')
     line.width = max(width * twig_thickness * max_size, 1)
     line.default_color = twig_color_young.linear_interpolate(twig_color_adult, ease_out(width))
 
