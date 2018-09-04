@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sun.png-a97650856ce91be4be519bf7b205b27f.stex"
+path="res://.import/clouds.png-464c94e0a1539d8462fefa302c956de3.stex"
 
 [deps]
 
-source_file="res://img/sun.png"
-dest_files=[ "res://.import/sun.png-a97650856ce91be4be519bf7b205b27f.stex" ]
+source_file="res://img/clouds.png"
+dest_files=[ "res://.import/clouds.png-464c94e0a1539d8462fefa302c956de3.stex" ]
 
 [params]
 
@@ -16,7 +16,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
