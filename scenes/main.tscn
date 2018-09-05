@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://img/dummy_texture.png" type="Texture" id=2]
 [ext_resource path="res://default_env.tres" type="Environment" id=3]
-[ext_resource path="res://img/sun.png" type="Texture" id=4]
+[ext_resource path="res://scenes/sun/sun.png" type="Texture" id=4]
 [ext_resource path="res://scenes/sun/sun.gd" type="Script" id=5]
 [ext_resource path="res://img/clouds.png" type="Texture" id=6]
 [ext_resource path="res://img/field.png" type="Texture" id=7]
@@ -80,10 +80,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -240.0
-margin_top = -276.0
-margin_right = 240.0
-margin_bottom = -6.0
+margin_left = -135.0
+margin_top = -480.0
+margin_right = 135.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -94,12 +93,12 @@ _sections_unfolded = [ "Anchor", "Margin", "Rect" ]
 
 [node name="sun" type="Sprite" parent="garden" index="0"]
 
-modulate = Color( 5, 5, 3, 1 )
-position = Vector2( 236.843, 347.492 )
+self_modulate = Color( 1.5, 1.5, 0.8, 1 )
+position = Vector2( 142.062, 635.776 )
 rotation = 0.0965232
 scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 4 )
-offset = Vector2( 0, -900 )
+offset = Vector2( 0, -1100 )
 script = ExtResource( 5 )
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
 sun_up = Color( 0.509583, 0.945312, 0.904463, 1 )
@@ -108,21 +107,29 @@ speed = 0.1
 
 [node name="clouds" type="Sprite" parent="garden" index="1"]
 
-position = Vector2( 0, -56 )
+position = Vector2( -7.93045, 189.654 )
+scale = Vector2( 0.584466, 0.584466 )
 texture = ExtResource( 6 )
 centered = false
 _sections_unfolded = [ "Offset", "Transform", "Visibility" ]
 
 [node name="field" type="Sprite" parent="garden" index="2"]
 
-position = Vector2( 243.555, 198.872 )
+position = Vector2( 140.661, 367.651 )
 scale = Vector2( 1.13667, 0.410194 )
 texture = ExtResource( 7 )
 _sections_unfolded = [ "Offset" ]
 
-[node name="twig" parent="garden" index="3" instance=ExtResource( 8 )]
+[node name="field2" type="Sprite" parent="garden" index="3"]
 
-position = Vector2( 240.204, 247.78 )
+position = Vector2( 136.139, 400.813 )
+scale = Vector2( 1.13667, 0.410194 )
+texture = ExtResource( 7 )
+_sections_unfolded = [ "Offset" ]
+
+[node name="twig" parent="garden" index="4" instance=ExtResource( 8 )]
+
+position = Vector2( 152.384, 410.53 )
 z_index = 5
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -138,9 +145,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig2" parent="garden" index="4" instance=ExtResource( 8 )]
+[node name="twig2" parent="garden" index="5" instance=ExtResource( 8 )]
 
-position = Vector2( 366.718, 224.749 )
+position = Vector2( 235.185, 390.514 )
 scale = Vector2( 0.3, 0.3 )
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
 twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
@@ -155,9 +162,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig3" parent="garden" index="5" instance=ExtResource( 8 )]
+[node name="twig3" parent="garden" index="6" instance=ExtResource( 8 )]
 
-position = Vector2( 182.147, 216.363 )
+position = Vector2( 91.3123, 406.245 )
 scale = Vector2( 0.3, 0.3 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -173,9 +180,9 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="twig4" parent="garden" index="6" instance=ExtResource( 8 )]
+[node name="twig4" parent="garden" index="7" instance=ExtResource( 8 )]
 
-position = Vector2( 65.4365, 265.502 )
+position = Vector2( 28.8664, 390.568 )
 scale = Vector2( 0.5, 0.5 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
@@ -191,10 +198,10 @@ sun_affinity = 0.2
 do_randomize = true
 growth_speed = 0.5
 
-[node name="butterfly" type="Sprite" parent="garden" index="7"]
+[node name="butterfly" type="Sprite" parent="garden" index="8"]
 
 editor/display_folded = true
-position = Vector2( 263.513, 159.927 )
+position = Vector2( 156.097, 363.375 )
 rotation = -1.03505
 texture = ExtResource( 9 )
 vframes = 2
@@ -210,5 +217,157 @@ playback_default_blend_time = 0.0
 playback_speed = 1.0
 anims/fly = SubResource( 3 )
 blend_times = [  ]
+
+[node name="select_seed" type="ScrollContainer" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -100.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+scroll_deadzone = 0
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags" ]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="select_seed" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 443.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Button" type="Button" parent="select_seed/HBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 145.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Glowing Orange Tree"
+flat = false
+align = 1
+
+[node name="Button2" type="Button" parent="select_seed/HBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 149.0
+margin_right = 294.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Glowing Orange Tree"
+flat = false
+align = 1
+
+[node name="Button3" type="Button" parent="select_seed/HBoxContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 298.0
+margin_right = 443.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Glowing Orange Tree"
+flat = false
+align = 1
+
+[node name="toolbar" type="HBoxContainer" parent="." index="4"]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -125.0
+margin_top = -40.0
+margin_right = 125.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Anchor", "Margin" ]
+
+[node name="add_plant" type="Button" parent="toolbar" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 74.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "new plant"
+flat = false
+align = 1
 
 
