@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=1]
+
+[node name="twig" instance=ExtResource( 1 )]
+
+position = Vector2( 152.384, 410.53 )
+z_index = 5
+twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
+twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
+leaf_color = Color( 1, 0.443359, 0.109375, 1 )
+twig_length = 10
+twig_thickness = 10
+gap = 0
+straightness = 0.4
+branchiness = 0.4
+leafiness = 0.8
+sun_affinity = 0.2
+do_randomize = true
+growth_speed = 0.5
+
+
