@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://img/dummy_texture.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://scenes/twig.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/butterfly/butterfly.png" type="Texture" id=9]
 [ext_resource path="res://scenes/butterfly/butterfly.gd" type="Script" id=10]
+[ext_resource path="res://scenes/select_seed.gd" type="Script" id=11]
+[ext_resource path="res://scenes/toolbar.gd" type="Script" id=12]
 
 [sub_resource type="Shader" id=1]
 
@@ -89,7 +91,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Anchor", "Margin", "Rect" ]
+_sections_unfolded = [ "Anchor", "Focus", "Hint", "Margin", "Material", "Mouse", "Rect", "Size Flags", "Theme", "Visibility" ]
 
 [node name="sun" type="Sprite" parent="garden" index="0"]
 
@@ -149,6 +151,7 @@ growth_speed = 0.5
 
 position = Vector2( 235.185, 390.514 )
 scale = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
 twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
 leaf_color = Color( 1, 0.443359, 0.109375, 1 )
@@ -220,6 +223,7 @@ blend_times = [  ]
 
 [node name="select_seed" type="ScrollContainer" parent="." index="3"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -239,7 +243,8 @@ scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
 scroll_deadzone = 0
-_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags" ]
+script = ExtResource( 11 )
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags", "Visibility" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="select_seed" index="0"]
 
@@ -256,77 +261,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-
-[node name="Button" type="Button" parent="select_seed/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 145.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Glowing Orange Tree"
-flat = false
-align = 1
-
-[node name="Button2" type="Button" parent="select_seed/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 149.0
-margin_right = 294.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Glowing Orange Tree"
-flat = false
-align = 1
-
-[node name="Button3" type="Button" parent="select_seed/HBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 298.0
-margin_right = 443.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Glowing Orange Tree"
-flat = false
-align = 1
 
 [node name="toolbar" type="HBoxContainer" parent="." index="4"]
 
@@ -345,6 +279,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
+script = ExtResource( 12 )
 _sections_unfolded = [ "Anchor", "Margin" ]
 
 [node name="add_plant" type="Button" parent="toolbar" index="0"]
@@ -369,5 +304,7 @@ group = null
 text = "new plant"
 flat = false
 align = 1
+
+[connection signal="pressed" from="toolbar/add_plant" to="toolbar" method="_on_add_plant_pressed"]
 
 
