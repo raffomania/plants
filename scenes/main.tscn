@@ -97,36 +97,44 @@ _sections_unfolded = [ "Anchor", "Focus", "Hint", "Margin", "Material", "Mouse",
 [node name="sun" type="Sprite" parent="garden" index="0"]
 
 self_modulate = Color( 1.5, 1.5, 0.8, 1 )
-position = Vector2( 142.062, 635.776 )
+position = Vector2( 136.36, 507.899 )
 rotation = 0.0965232
 scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 4 )
-offset = Vector2( 0, -1100 )
+offset = Vector2( 0, -900 )
 script = ExtResource( 5 )
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
-sun_up = Color( 0.509583, 0.945312, 0.904463, 1 )
+sun_up = Color( 0.4245, 0.835938, 0.835938, 1 )
 sun_down = Color( 0.0457764, 0.0166016, 0.25, 1 )
 speed = 0.1
 
 [node name="clouds" type="Sprite" parent="garden" index="1"]
 
-position = Vector2( -7.93045, 189.654 )
-scale = Vector2( 0.584466, 0.584466 )
+modulate = Color( 1, 1, 1, 0.784549 )
+position = Vector2( -168.957, 183.17 )
+rotation = -0.174924
+scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 6 )
 centered = false
-_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+vframes = 2
+_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 
-[node name="field" type="Sprite" parent="garden" index="2"]
+[node name="clouds2" type="Sprite" parent="garden" index="2"]
 
-position = Vector2( 140.661, 367.651 )
-scale = Vector2( 1.13667, 0.410194 )
-texture = ExtResource( 7 )
-_sections_unfolded = [ "Offset" ]
+modulate = Color( 1, 1, 1, 0.801098 )
+position = Vector2( 165.804, 85.4291 )
+rotation = 0.220124
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 6 )
+centered = false
+vframes = 2
+frame = 1
+_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 
-[node name="field2" type="Sprite" parent="garden" index="3"]
+[node name="field" type="Sprite" parent="garden" index="3"]
 
-position = Vector2( 136.139, 400.813 )
-scale = Vector2( 1.13667, 0.410194 )
+position = Vector2( 138.576, 407.8 )
+scale = Vector2( 1.13667, 0.585741 )
 texture = ExtResource( 7 )
 _sections_unfolded = [ "Offset" ]
 
