@@ -145,6 +145,7 @@ branchiness = 0.4
 leafiness = 0.8
 sun_affinity = 0.2
 do_randomize = true
+plant_name = "Unnamed Plant"
 growth_speed = 0.5
 
 [node name="twig2" parent="garden" index="5" instance=ExtResource( 8 )]
@@ -163,6 +164,7 @@ branchiness = 0.4
 leafiness = 0.8
 sun_affinity = 0.2
 do_randomize = true
+plant_name = "Unnamed Plant"
 growth_speed = 0.5
 
 [node name="twig3" parent="garden" index="6" instance=ExtResource( 8 )]
@@ -181,6 +183,7 @@ branchiness = 0.4
 leafiness = 0.8
 sun_affinity = 0.2
 do_randomize = true
+plant_name = "Unnamed Plant"
 growth_speed = 0.5
 
 [node name="twig4" parent="garden" index="7" instance=ExtResource( 8 )]
@@ -199,6 +202,7 @@ branchiness = 0.4
 leafiness = 0.8
 sun_affinity = 0.2
 do_randomize = true
+plant_name = "Unnamed Plant"
 growth_speed = 0.5
 
 [node name="butterfly" type="Sprite" parent="garden" index="8"]

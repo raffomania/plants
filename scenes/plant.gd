@@ -11,6 +11,7 @@ export(float, 0, 1) var branchiness
 export(float, 0, 1) var leafiness
 export(float, 0, 1) var sun_affinity
 export(bool) var do_randomize
+export(String) var plant_name = 'Unnamed Plant'
 
 # two years max, atm
 export(float, 0, 1) var growth_speed
