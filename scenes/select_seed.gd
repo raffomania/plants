@@ -1,5 +1,7 @@
 extends ScrollContainer
 
+signal seed_selected(scene)
+
 func _ready():
 	var plants = get_available_plants()
 	for scene in plants:
@@ -9,7 +11,7 @@ func _ready():
 		$HBoxContainer.add_child(button)
 
 func plant_selected(scene):
-	$'../garden'.add_child(scene.instance())
+	emit_signal('seed_selected', scene)
 	self.visible = false
 
 func get_available_plants():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://img/dummy_texture.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scenes/butterfly/butterfly.gd" type="Script" id=10]
 [ext_resource path="res://scenes/select_seed.gd" type="Script" id=11]
 [ext_resource path="res://scenes/toolbar.gd" type="Script" id=12]
+[ext_resource path="res://scenes/select_position.gd" type="Script" id=13]
 
 [sub_resource type="Shader" id=1]
 
@@ -87,7 +88,7 @@ margin_top = -480.0
 margin_right = 135.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 0
+mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
@@ -238,7 +239,7 @@ margin_right = -10.0
 margin_bottom = -10.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-mouse_filter = 0
+mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -248,7 +249,7 @@ scroll_vertical_enabled = true
 scroll_vertical = 0
 scroll_deadzone = 0
 script = ExtResource( 11 )
-_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags", "Visibility" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Mouse", "Size Flags", "Visibility" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="select_seed" index="0"]
 
@@ -306,6 +307,17 @@ group = null
 text = "new plant"
 flat = false
 align = 1
+
+[node name="select_position" type="Sprite" parent="." index="5"]
+
+visible = false
+position = Vector2( 172.435, 335.89 )
+scale = Vector2( 15, 15 )
+texture = ExtResource( 2 )
+script = ExtResource( 13 )
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+
+[connection signal="seed_selected" from="select_seed" to="select_position" method="_on_select_seed_seed_selected"]
 
 [connection signal="pressed" from="toolbar/add_plant" to="toolbar" method="_on_add_plant_pressed"]
 
