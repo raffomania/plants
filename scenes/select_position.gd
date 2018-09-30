@@ -11,9 +11,7 @@ func _input(event):
 			position = event.position
 		elif event is InputEventMouseButton and event.pressed:
 			var plant = selected_plant_scene.instance()
-			print(global_position)
 			plant.position = $'../garden'.get_global_transform().xform_inv(global_position)
-			print(plant.position)
 			$'../garden'.add_child(plant)
 			visible = false
 

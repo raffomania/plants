@@ -150,10 +150,10 @@ twig_length = 10
 twig_thickness = 10
 gap = 0
 straightness = 0.4
-branchiness = 0.4
+branchiness = 0.8
 leafiness = 0.8
 sun_affinity = 0.2
-do_randomize = true
+do_randomize = false
 plant_name = "Unnamed Plant"
 growth_speed = 0.5
 

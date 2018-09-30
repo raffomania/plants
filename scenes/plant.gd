@@ -17,6 +17,8 @@ export(String) var plant_name = 'Unnamed Plant'
 export(float, 0, 1) var growth_speed
 
 var softnoiseScript = preload("res://assets/softnoise.gd")
+var leaf_texture = preload("res://img/leaf.png")
+var leafs = []
 var softnoise
 
 var size = 0
@@ -93,7 +95,8 @@ func grow(energy):
   size = size_after_days(total_energy)
   # TODO this doesn't seem right
   var energy_used = own_energy * (size_before / size)
-  size_changed()
+  if abs(size - size_before) > 0.0001:
+    size_changed()
 
   if size > start_branching_at_size and not has_node('twig'):
     spawn_children(max_children)
@@ -117,23 +120,25 @@ func add_twig_line():
   line.default_color = twig_color_young
   line.add_point(Vector2(0, 0))
   line.add_point(end_position)
+  line.z_index = -5
+  line.z_as_relative = true
   add_child(line)
 
 func add_leaf(zindex):
-  var scene = load("res://scenes/leaf.tscn")
-  var leaf = scene.instance()
-  var position = randf() * end_position
-  leaf.translate(position)
+  var position = randf() * end_position + Vector2(randf() * 5, 0)
+  var rotation = (randf() - 0.5) * PI * 0.5
+  var color = leaf_color.lightened(randf() * 0.1 + (zindex * 0.2))
+  var leaf_scale = rand_range(0.7, 1) * 0.5
+  var scale_vec = Vector2(leaf_scale, leaf_scale)
   if randf() > 0.5:
     # turn around to the other side
-    leaf.rotate(PI)
-  leaf.rotate(randf() * PI * 0.5)
-  leaf.modulate = leaf_color.lightened(randf() * 0.1 + (zindex * 0.2))
-  var leaf_size = rand_range(0.7, 1)
-  leaf.apply_scale(Vector2(leaf_size, leaf_size))
-  leaf.add_to_group('leafs')
-  leaf.z_index = zindex
-  add_child(leaf)
+    scale_vec = scale_vec * Vector2(-1, 1)
+  leafs.append({
+    "position": position,
+    "rotation": rotation,
+    "color": color,
+    "scale": scale_vec
+  })
 
 func spawn_children(count):
   for i in range(count):
@@ -181,3 +186,8 @@ func get_child_rotation(child_index, num_children):
   var random_range = PI * 0.5 * crookedness
   var random_offset = rand_range(-random_range/2, random_range/2)
   return upward_correction + sibling_offset + random_offset
+
+func _draw():
+  for leaf in leafs:
+    draw_set_transform(leaf["position"], leaf["rotation"], leaf["scale"])
+    draw_texture(leaf_texture, Vector2(), leaf["color"])
