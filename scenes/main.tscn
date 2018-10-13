@@ -150,12 +150,11 @@ twig_length = 10
 twig_thickness = 10
 gap = 0
 straightness = 0.4
-branchiness = 0.8
-leafiness = 0.8
+branchiness = 0.7
+leafiness = 1.0
 sun_affinity = 0.2
 do_randomize = false
-plant_name = "Unnamed Plant"
-growth_speed = 0.5
+growth_speed = 1.0
 
 [node name="twig2" parent="garden" index="5" instance=ExtResource( 8 )]
 
@@ -173,48 +172,9 @@ branchiness = 0.4
 leafiness = 0.8
 sun_affinity = 0.2
 do_randomize = true
-plant_name = "Unnamed Plant"
 growth_speed = 0.5
 
-[node name="twig3" parent="garden" index="6" instance=ExtResource( 8 )]
-
-position = Vector2( 91.3123, 406.245 )
-scale = Vector2( 0.3, 0.3 )
-_sections_unfolded = [ "Transform", "Z Index" ]
-twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
-twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
-leaf_color = Color( 1, 0.443359, 0.109375, 1 )
-twig_length = 10
-twig_thickness = 10
-gap = 0
-straightness = 0.4
-branchiness = 0.4
-leafiness = 0.8
-sun_affinity = 0.2
-do_randomize = true
-plant_name = "Unnamed Plant"
-growth_speed = 0.5
-
-[node name="twig4" parent="garden" index="7" instance=ExtResource( 8 )]
-
-position = Vector2( 28.8664, 390.568 )
-scale = Vector2( 0.5, 0.5 )
-_sections_unfolded = [ "Transform", "Z Index" ]
-twig_color_young = Color( 0.9375, 0.909319, 0.216064, 1 )
-twig_color_adult = Color( 0.71875, 0.299362, 0.0477295, 1 )
-leaf_color = Color( 1, 0.443359, 0.109375, 1 )
-twig_length = 10
-twig_thickness = 10
-gap = 0
-straightness = 0.4
-branchiness = 0.4
-leafiness = 0.8
-sun_affinity = 0.2
-do_randomize = true
-plant_name = "Unnamed Plant"
-growth_speed = 0.5
-
-[node name="butterfly" type="Sprite" parent="garden" index="8"]
+[node name="butterfly" type="Sprite" parent="garden" index="6"]
 
 editor/display_folded = true
 position = Vector2( 156.097, 363.375 )

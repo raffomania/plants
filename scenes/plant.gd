@@ -17,10 +17,9 @@ export(String) var plant_name = 'Unnamed Plant'
 export(float, 0, 1) var growth_speed
 
 var softnoiseScript = preload("res://assets/softnoise.gd")
-var leaf_texture = preload("res://img/leaf.png")
-var leafs = []
 var softnoise
 
+var leaf_stray = 5
 var size = 0
 var max_size = 1
 var max_children = 1
@@ -73,6 +72,11 @@ func initialize():
   add_twig_line()
   for i in range(round(actual_leafiness * 5)):
     add_leaf(i)
+  $'texture_sprite'.texture = $viewport.get_texture()
+  $'texture_sprite'.position = end_position / 2
+  # TODO this should not be hardcoded
+  var leaf_length = 15
+  $viewport.size = Vector2((leaf_stray + leaf_length) * 2, abs(end_position.y) + leaf_length * 2)
 
 func size_after_days(days):
   return limited_growth(days)
@@ -125,7 +129,8 @@ func add_twig_line():
   add_child(line)
 
 func add_leaf(zindex):
-  var position = randf() * end_position + Vector2(randf() * 5, 0)
+  # Center leaf positions to avoid calculating with viewport margins
+  var position = randf() * end_position - Vector2(0, end_position.y/2) + Vector2(randf() * leaf_stray, 0)
   var rotation = (randf() - 0.5) * PI * 0.5
   var color = leaf_color.lightened(randf() * 0.1 + (zindex * 0.2))
   var leaf_scale = rand_range(0.7, 1) * 0.5
@@ -133,7 +138,7 @@ func add_leaf(zindex):
   if randf() > 0.5:
     # turn around to the other side
     scale_vec = scale_vec * Vector2(-1, 1)
-  leafs.append({
+  $'viewport/twig_texture'.leafs.append({
     "position": position,
     "rotation": rotation,
     "color": color,
@@ -186,8 +191,3 @@ func get_child_rotation(child_index, num_children):
   var random_range = PI * 0.5 * crookedness
   var random_offset = rand_range(-random_range/2, random_range/2)
   return upward_correction + sibling_offset + random_offset
-
-func _draw():
-  for leaf in leafs:
-    draw_set_transform(leaf["position"], leaf["rotation"], leaf["scale"])
-    draw_texture(leaf_texture, Vector2(), leaf["color"])
