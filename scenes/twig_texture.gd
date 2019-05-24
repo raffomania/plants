@@ -7,9 +7,6 @@ func _draw():
     var viewport_size = $'../../viewport'.size
     for leaf in leafs:
         var position = leaf["position"] + Vector2(viewport_size.x/2, viewport_size.y/2)
-        print(leaf["position"])
-        print(position)
-        print(viewport_size)
         draw_set_transform(position, leaf["rotation"], leaf["scale"])
         draw_texture(leaf_texture, Vector2(), leaf["color"])
 

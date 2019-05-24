@@ -20,6 +20,7 @@ var softnoiseScript = preload("res://assets/softnoise.gd")
 var softnoise
 
 var leaf_stray = 5
+var leaf_max_length = 15
 var size = 0
 var max_size = 1
 var max_children = 1
@@ -32,6 +33,8 @@ var min_branching_max_size = 0.3
 var start_branching_at_size = 0.02
 var is_root = false
 var initial_scale
+var viewport_margins = Vector2(leaf_stray + leaf_max_length, leaf_max_length)
+var size_last_updated
 
 func _ready():
   add_to_group('twigs')
@@ -70,13 +73,10 @@ func initialize():
   size_changed()
 
   add_twig_line()
-  for i in range(round(actual_leafiness * 5)):
+  for i in range(round(actual_leafiness * 20)):
     add_leaf(i)
-  $'texture_sprite'.texture = $viewport.get_texture()
   $'texture_sprite'.position = end_position / 2
-  # TODO this should not be hardcoded
-  var leaf_length = 15
-  $viewport.size = Vector2((leaf_stray + leaf_length) * 2, abs(end_position.y) + leaf_length * 2)
+  $viewport.size = Vector2(viewport_margins.x * 2, abs(end_position.y) + viewport_margins.y * 2)
 
 func size_after_days(days):
   return limited_growth(days)
@@ -99,7 +99,7 @@ func grow(energy):
   size = size_after_days(total_energy)
   # TODO this doesn't seem right
   var energy_used = own_energy * (size_before / size)
-  if abs(size - size_before) > 0.0001:
+  if abs(size - size_last_updated) > 0.1:
     size_changed()
 
   if size > start_branching_at_size and not has_node('twig'):
@@ -113,20 +113,22 @@ func size_changed():
   var width = min(size, 1)
   var length = min(size * 5, 1)
   set_scale(initial_scale * length)
-  if has_node('line'):
-    var line = get_node('line')
+  if $'viewport/twig_texture'.has_node('line'):
+    var line = $'viewport/twig_texture/line'
     line.width = max(width * twig_thickness * max_size, 1)
     line.default_color = twig_color_young.linear_interpolate(twig_color_adult, ease_out(width))
+  $'texture_sprite'.texture = $viewport.get_texture()
+  size_last_updated = size
 
 func add_twig_line():
   var line = Line2D.new()
   line.name = 'line'
   line.default_color = twig_color_young
-  line.add_point(Vector2(0, 0))
-  line.add_point(end_position)
+  line.add_point(viewport_margins)
+  line.add_point(viewport_margins + Vector2(0, abs(end_position.y)))
   line.z_index = -5
   line.z_as_relative = true
-  add_child(line)
+  $'viewport/twig_texture'.add_child(line)
 
 func add_leaf(zindex):
   # Center leaf positions to avoid calculating with viewport margins
